@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strings"
 	"time"
 )
 
@@ -21,15 +20,15 @@ func getInput(c chan string) {
 }
 
 func main() {
-	content, err := os.ReadFile("problems.csv")
+	csvFile, err := os.Open("problems.csv")
 
 	if err != nil {
 		log.Panic(err)
 	}
 
-	r := csv.NewReader(strings.NewReader(string(content)))
-
+	r := csv.NewReader(csvFile)
 	records, err := r.ReadAll()
+	csvFile.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
